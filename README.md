@@ -44,7 +44,25 @@ enchantment level calculation, the full-level experience cost, and the rule that
 ## 2. Building
 
 Requirements: a JDK 17 or newer to run Gradle (the build provisions its own toolchains), and network access to
-the Mojang, Forge and GTNH Maven servers.
+the hosts below. In a restricted network (for example a sandbox with an allow-list), every host must be reachable.
+
+| Host | Used for |
+|---|---|
+| `services.gradle.org` | Gradle distribution |
+| `plugins.gradle.org`, `repo.maven.apache.org` | Gradle plugins and Maven Central libraries |
+| `api.foojay.io` | Java toolchain download (not needed when the JDKs are installed locally) |
+| `nexus.gtnewhorizons.com` | GTNH build plugins and libraries |
+| `maven.minecraftforge.net`, `files.minecraftforge.net` | Forge, MCP mappings, the Fernflower decompiler |
+| `piston-meta.mojang.com`, `launchermeta.mojang.com` | Minecraft version metadata |
+| `piston-data.mojang.com`, `launcher.mojang.com` | Minecraft client and server jars |
+| `libraries.minecraft.net`, `resources.download.minecraft.net` | Minecraft libraries and assets |
+| `files.prismlauncher.org` | Patched log4j used by Minecraft 1.7.10 |
+| `repo.spongepowered.org` | Legacy Forge libraries (`lzma`) |
+| `raw.githubusercontent.com` | MCP mapping files |
+
+Maven Central can answer with HTTP 429 (rate limiting), which stops dependency resolution. If this happens, run
+the build again, or place the GTNH Nexus (`https://nexus.gtnewhorizons.com/repository/public/`, which mirrors
+Maven Central) first in the repository list with a local Gradle init script.
 
 ```bash
 ./gradlew build          # produces build/libs/arcaneenchanting-<version>.jar
