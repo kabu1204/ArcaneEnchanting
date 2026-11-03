@@ -43,8 +43,9 @@ enchantment level calculation, the full-level experience cost, and the rule that
 
 ## 2. Building
 
-Requirements: a JDK 17 or newer to run Gradle (the build provisions its own toolchains), and network access to
-the hosts below. In a restricted network (for example a sandbox with an allow-list), every host must be reachable.
+Requirements: a JDK 17 or newer to start Gradle, and network access to the hosts below. The Gradle daemon runs
+on Java 25 (see `gradle/gradle-daemon-jvm.properties`): if no Java 25 JDK is installed locally, Gradle downloads one
+through `api.foojay.io`. The other toolchains the build needs are provisioned the same way. In a restricted network (for example a sandbox with an allow-list), every host must be reachable.
 
 | Host | Used for |
 |---|---|
