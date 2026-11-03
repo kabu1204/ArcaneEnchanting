@@ -1,0 +1,11 @@
+tile.arcaneenchanting.arcane_table.name=奥术附魔台
+container.arcaneenchanting.table=奥术附魔台
+gui.arcaneenchanting.power=魔力 %d / 15
+gui.arcaneenchanting.rescry=重新占卜（%d）
+gui.arcaneenchanting.rescry.tip=打乱预示，揭示新的附魔。
+gui.arcaneenchanting.rescry.cost=消耗 %d 级经验
+gui.arcaneenchanting.hidden=+ %d 个隐藏的附魔
+gui.arcaneenchanting.cost=消耗 %d 级经验
+gui.arcaneenchanting.requires=需要 %d 级经验
+gui.arcaneenchanting.busy=附魔台正在进行仪式。
+gui.arcaneenchanting.empty=请在附魔台上放置物品。

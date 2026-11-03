@@ -1,0 +1,11 @@
+tile.arcaneenchanting.arcane_table.name=Arcane Enchanting Table
+container.arcaneenchanting.table=Arcane Enchanting Table
+gui.arcaneenchanting.power=Power %d / 15
+gui.arcaneenchanting.rescry=Re-scry (%d)
+gui.arcaneenchanting.rescry.tip=Shuffle the visions and reveal new enchantments.
+gui.arcaneenchanting.rescry.cost=Costs %d level(s)
+gui.arcaneenchanting.hidden=+ %d hidden enchantment(s)
+gui.arcaneenchanting.cost=Costs %d levels
+gui.arcaneenchanting.requires=Requires %d levels
+gui.arcaneenchanting.busy=The table is performing a ritual.
+gui.arcaneenchanting.empty=Place an item on the table.
