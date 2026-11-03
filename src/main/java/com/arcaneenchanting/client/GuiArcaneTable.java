@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -16,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.arcaneenchanting.ArcaneEnchanting;
-import com.arcaneenchanting.Config;
 import com.arcaneenchanting.inventory.ContainerArcaneTable;
 import com.arcaneenchanting.inventory.EnchantOptions;
 import com.arcaneenchanting.tile.TileArcaneTable;
@@ -37,6 +37,8 @@ public class GuiArcaneTable extends GuiContainer {
 
     private static final int OPT_X = 78, OPT_Y = 16, OPT_W = 92, OPT_H = 24, OPT_STEP = 26;
     private static final int RESCRY_Y = 96, RESCRY_H = 14;
+    /** Glyph lines that fit inside one option (two 9-pixel lines in a 24-pixel option). */
+    private static final int GLYPH_LINES = 2;
     private static final int CIRCLE_X = ContainerArcaneTable.SLOT_X + 8, CIRCLE_Y = ContainerArcaneTable.SLOT_Y + 8;
 
     private static final int C_GOLD = 0xFFC8963C, C_GOLD_LIGHT = 0xFFF0D080, C_EDGE = 0xFF3A2858;
@@ -75,7 +77,7 @@ public class GuiArcaneTable extends GuiContainer {
     }
 
     private boolean canRescry() {
-        if (!hasItem() || isBusy() || !canAfford(Config.rescryCost)) {
+        if (!hasItem() || isBusy() || !canAfford(container.getRescryCost())) {
             return false;
         }
         for (int i = 0; i < EnchantOptions.COUNT; ++i) {
@@ -139,7 +141,7 @@ public class GuiArcaneTable extends GuiContainer {
             frame(x, y, OPT_W, OPT_H, hover ? C_GOLD_LIGHT : (selectable ? C_GOLD : 0xFF3A3046));
 
             int glyphColor = hover ? 0xFFE9A8 : (selectable ? 0xB89CFF : 0x5E5070);
-            mc.standardGalacticFontRenderer.drawSplitString(glyphs, x + 4, y + 3, OPT_W - 24, glyphColor);
+            drawGlyphs(glyphs, x + 4, y + 3, OPT_W - 24, glyphColor);
             String lv = String.valueOf(level);
             int lvColor = selectable ? 0x80FF20 : 0x407020;
             fontRendererObj.drawStringWithShadow(
@@ -157,7 +159,7 @@ public class GuiArcaneTable extends GuiContainer {
         frame(bx, by, OPT_W, RESCRY_H, rescryHover ? 0xFF9AD8FF : (rescry ? 0xFF4A78A8 : 0xFF2A2A3A));
         drawCenteredString(
             fontRendererObj,
-            I18n.format("gui.arcaneenchanting.rescry", Config.rescryCost),
+            I18n.format("gui.arcaneenchanting.rescry", container.getRescryCost()),
             bx + OPT_W / 2,
             by + 3,
             rescry ? 0xD8F0FF : 0x606878);
@@ -171,6 +173,16 @@ public class GuiArcaneTable extends GuiContainer {
             t + RESCRY_Y + 3,
             0xC8B4FF);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    /** Draws the decorative glyph name, wrapped to the given width and limited to the lines that fit an option. */
+    private void drawGlyphs(String glyphs, int x, int y, int width, int color) {
+        FontRenderer font = mc.standardGalacticFontRenderer;
+        List<?> lines = font.listFormattedStringToWidth(glyphs, width);
+        int max = Math.min(lines.size(), GLYPH_LINES);
+        for (int i = 0; i < max; ++i) {
+            font.drawString(String.valueOf(lines.get(i)), x, y + i * font.FONT_HEIGHT, color);
+        }
     }
 
     private void frame(int x, int y, int w, int h, int color) {
@@ -237,7 +249,7 @@ public class GuiArcaneTable extends GuiContainer {
         }
         if (inRect(mx, my, OPT_X, RESCRY_Y, OPT_W, RESCRY_H)) {
             tip.add("§b" + I18n.format("gui.arcaneenchanting.rescry.tip"));
-            tip.add("§7" + I18n.format("gui.arcaneenchanting.rescry.cost", Config.rescryCost));
+            tip.add("§7" + I18n.format("gui.arcaneenchanting.rescry.cost", container.getRescryCost()));
         }
         if (!hasItem() && inRect(mx, my, OPT_X, OPT_Y, OPT_W, OPT_STEP * 2 + OPT_H)) {
             tip.add("§7" + I18n.format("gui.arcaneenchanting.empty"));

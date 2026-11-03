@@ -152,6 +152,10 @@ public class TileArcaneTable extends TileEntity {
         }
         if (pendingIsBook) {
             ItemStack book = new ItemStack(Items.enchanted_book);
+            // Keep the book's other data (custom name, repair cost), as the vanilla table does.
+            if (ritualItem.hasTagCompound()) {
+                book.setTagCompound((NBTTagCompound) ritualItem.getTagCompound().copy());
+            }
             for (int i = 0; i < pendingEnchants.tagCount(); ++i) {
                 NBTTagCompound e = pendingEnchants.getCompoundTagAt(i);
                 Items.enchanted_book.addEnchantment(book, new EnchantmentData(e.getInteger("id"), e.getInteger("lvl")));

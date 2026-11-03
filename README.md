@@ -62,7 +62,7 @@ File: `config/arcaneenchanting.cfg` (created on first launch).
 
 | Category | Key | Default | Meaning |
 |---|---|---|---|
-| gameplay | `rescryCost` | 1 | Levels consumed by Re-scry |
+| gameplay | `rescryCost` | 1 | Levels consumed by Re-scry (the server value is shown to clients) |
 | gameplay | `ritualTicks` | 60 | Base ritual length in ticks |
 | gameplay | `ritualTicksPerTier` | 12 | Extra ticks for the second and third option |
 | visual | `particleMultiplier` | 1.0 | Particle amount (0 disables custom particles); also scaled by the game's particle setting |

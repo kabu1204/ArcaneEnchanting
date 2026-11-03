@@ -230,13 +230,13 @@ public final class TableClientTicker {
                 }
                 // Sparks leaping from the corner crystals to the item.
                 if (RAND.nextFloat() < 0.6F * mult) {
-                    float[] corner = TableLayout.CORNERS[RAND.nextInt(4)];
-                    float time = a.ticks;
+                    int index = RAND.nextInt(4);
+                    float[] corner = TableLayout.CORNERS[index];
                     spawn(
                         EntityArcaneMoteFX.converge(
                             world,
                             t.xCoord + corner[0],
-                            t.yCoord + TableLayout.crystalY(0, time, a.charge),
+                            t.yCoord + TableLayout.crystalY(index, a.ticks, a.charge),
                             t.zCoord + corner[1],
                             cx,
                             iy,

@@ -41,7 +41,8 @@ public class ContainerArcaneTable extends Container {
     public static final int D_HIDDEN = 9; // 3 values: number of further (hidden) enchantments
     public static final int D_POWER = 12;
     public static final int D_NAME_SEED = 13;
-    public static final int D_COUNT = 14;
+    public static final int D_RESCRY_COST = 14; // server configuration value, so the GUI never shows a client value
+    public static final int D_COUNT = 15;
 
     // GUI layout (shared with GuiArcaneTable).
     public static final int SLOT_X = 35;
@@ -79,6 +80,8 @@ public class ContainerArcaneTable extends Container {
 
         Arrays.fill(lastSent, Integer.MIN_VALUE);
         clearOptionData();
+        // On the client this is a placeholder until the server sends its own value.
+        data[D_RESCRY_COST] = Config.rescryCost;
 
         addSlotToContainer(new Slot(tableInventory, 0, SLOT_X, SLOT_Y) {
 
@@ -105,6 +108,11 @@ public class ContainerArcaneTable extends Container {
         if (!world.isRemote) {
             data[D_POWER] = Math.min(EnchantOptions.computePower(world, x, y, z), 99);
         }
+    }
+
+    /** Levels consumed by Re-scry, as configured on the server. */
+    public int getRescryCost() {
+        return data[D_RESCRY_COST];
     }
 
     public TileArcaneTable getTile() {
